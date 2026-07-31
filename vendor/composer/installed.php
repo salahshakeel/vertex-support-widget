@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
-        'name' => 'vertex/support-widget',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'name' => 'vertexinvo/support-widget',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'f103fcf73ee7a62d03db035852ebe216d103a551',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -547,10 +547,10 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'vertex/support-widget' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+        'vertexinvo/support-widget' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'f103fcf73ee7a62d03db035852ebe216d103a551',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

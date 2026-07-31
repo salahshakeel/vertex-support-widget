@@ -1,6 +1,6 @@
 {
-    "name": "vertex/support-widget",
-    "description": "Vertex Support Widget",
+    "name": "vertexinvo/support-widget",
+    "description": "Vertexinvo Support Widget",
     "type": "library",
     "license": "MIT",
     "autoload": {
