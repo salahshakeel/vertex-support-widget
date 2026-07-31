@@ -89,6 +89,38 @@ return [
 ];
 ```
 
+## Include Widget Component
+
+After publishing the assets and adding the CSRF token, include the widget component in your main Blade layout file.
+
+Add the following line before the closing `</body>` tag:
+
+```blade
+@include('vertex-support::widget')
+```
+
+Example:
+
+```blade
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
+
+<body>
+
+    {{ $slot ?? '' }}
+
+    @include('vertex-support::widget')
+
+</body>
+</html>
+```
+
+The widget will automatically handle visibility and will only appear for authenticated users.
+
+
 ---
 
 ## Widget Visibility
