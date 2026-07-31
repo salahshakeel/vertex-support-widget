@@ -1,9 +1,12 @@
-````markdown
 # VertexInvo Support Widget
+
+[![Latest Version](https://img.shields.io/packagist/v/vertexinvo/support-widget.svg?style=flat-square)](https://packagist.org/packages/vertexinvo/support-widget)
+[![Total Downloads](https://img.shields.io/packagist/dt/vertexinvo/support-widget.svg?style=flat-square)](https://packagist.org/packages/vertexinvo/support-widget)
+[![License](https://img.shields.io/packagist/l/vertexinvo/support-widget.svg?style=flat-square)](https://github.com/salahshakeel/vertex-support-widget)
 
 A Laravel package that adds a floating support widget to your application and securely authenticates logged-in users into the VertexInvo Support Portal using Single Sign-On (SSO).
 
-The widget allows your users to access support instantly without creating a separate support account. Authentication is handled securely through your Laravel backend, keeping your API credentials private.
+The package allows your users to open support directly from your application without requiring a separate login. Authentication is securely handled through your Laravel backend.
 
 ---
 
@@ -12,9 +15,9 @@ The widget allows your users to access support instantly without creating a sepa
 - 🚀 Easy installation via Composer
 - 🔐 Secure server-side SSO authentication
 - 👤 Widget visible only to authenticated users
-- 🎨 Configurable button and icon colors
-- 📍 Configurable widget position
-- ⚙️ Laravel package auto-discovery support
+- 🎨 Customizable widget colors
+- 📍 Customizable widget position
+- ⚙️ Laravel package auto-discovery
 - 🛡️ API key never exposed to the browser
 - 🔄 Supports Laravel 10, 11, 12, and 13
 
@@ -27,14 +30,14 @@ The widget allows your users to access support instantly without creating a sepa
 | PHP | 8.1+ |
 | Laravel | 10.x, 11.x, 12.x, 13.x |
 
-### Laravel Compatibility
+### Compatibility
 
-| Laravel Version | PHP Version |
-|----------------|-------------|
-| Laravel 10.x | PHP 8.1+ |
-| Laravel 11.x | PHP 8.2+ |
-| Laravel 12.x | PHP 8.2+ |
-| Laravel 13.x | PHP 8.3+ |
+| Laravel | PHP |
+|---------|-----|
+| Laravel 10 | PHP 8.1+ |
+| Laravel 11 | PHP 8.2+ |
+| Laravel 12 | PHP 8.2+ |
+| Laravel 13 | PHP 8.3+ |
 
 ---
 
@@ -44,15 +47,15 @@ Install the package using Composer:
 
 ```bash
 composer require vertexinvo/support-widget
-````
+```
 
-Laravel package auto-discovery will automatically register the service provider.
+Laravel will automatically discover and register the package service provider.
 
 ---
 
-# Publish Configuration
+# Configuration
 
-Publish the package configuration:
+Publish the configuration file:
 
 ```bash
 php artisan vendor:publish --tag=vertex-support-config
@@ -66,7 +69,7 @@ config/vertex-support.php
 
 ---
 
-# Publish Assets
+# Assets
 
 Publish the widget assets:
 
@@ -76,7 +79,7 @@ php artisan vendor:publish --tag=vertex-support-assets
 
 ---
 
-# Environment Configuration
+# Environment Setup
 
 Add your VertexInvo Support API key to your `.env` file:
 
@@ -86,15 +89,9 @@ VERTEX_SUPPORT_API_KEY=your_api_key
 
 ---
 
-# Configuration
+# Configuration Example
 
-The configuration file is located at:
-
-```
-config/vertex-support.php
-```
-
-Example:
+`config/vertex-support.php`
 
 ```php
 return [
@@ -110,7 +107,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | VertexInvo API Key
+    | API Key
     |--------------------------------------------------------------------------
     */
 
@@ -119,7 +116,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | SSO API Endpoint
+    | SSO Endpoint
     |--------------------------------------------------------------------------
     */
 
@@ -131,7 +128,7 @@ return [
     | Widget Position
     |--------------------------------------------------------------------------
     |
-    | Available positions:
+    | Available:
     | bottom-right
     | bottom-left
     |
@@ -157,9 +154,7 @@ return [
 
 # Add Widget To Your Layout
 
-After publishing the package assets, add the widget component to your main Blade layout.
-
-Add this before the closing `</body>` tag:
+Add the widget component before the closing `</body>` tag in your main Blade layout:
 
 ```blade
 @include('vertex-support::widget')
@@ -186,43 +181,42 @@ Example:
 </html>
 ```
 
-The widget will automatically check authentication status and only display for logged-in users.
+The widget automatically checks authentication and only displays for logged-in users.
 
 ---
 
 # Widget Visibility
 
-The support widget is only available for authenticated users.
-
-| User               | Widget    |
-| ------------------ | --------- |
-| Guest User         | ❌ Hidden  |
+| User | Widget |
+|------|--------|
+| Guest | ❌ Hidden |
 | Authenticated User | ✅ Visible |
 
 ---
 
-# Single Sign-On (SSO) Flow
+# SSO Authentication Flow
 
 When a user clicks the support widget:
 
-1. The package sends a secure server-side request from Laravel.
-2. VertexInvo validates the product API key.
-3. A temporary redirect URL is generated.
-4. The user is redirected to the VertexInvo Support Portal.
+1. Laravel receives the request.
+2. Laravel sends a secure server-side request to VertexInvo.
+3. VertexInvo validates the API key.
+4. A temporary secure redirect URL is generated.
+5. The user is redirected to the Support Portal.
 
-The API key is never sent to the browser.
+Your API key is never exposed to the frontend.
 
 ---
 
-# SSO Request
+# API Request
 
-Endpoint:
+The package communicates with:
 
 ```
 POST https://support.vertexinvo.com/api/v1/sso
 ```
 
-Request payload:
+Request:
 
 ```json
 {
@@ -234,7 +228,9 @@ Request payload:
 
 ---
 
-# Successful Response
+# API Response
+
+Success:
 
 ```json
 {
@@ -243,9 +239,7 @@ Request payload:
 }
 ```
 
----
-
-# Error Response
+Error:
 
 ```json
 {
@@ -257,57 +251,54 @@ Request payload:
 
 # Security
 
-The package follows secure authentication practices:
+This package is designed with security in mind:
 
-* API keys are stored only on the server.
-* API keys are never exposed to JavaScript.
-* SSO requests are processed through Laravel.
-* Only temporary redirect URLs are returned to users.
-* Only authenticated users can access the support widget.
+- API keys remain server-side.
+- No sensitive credentials are sent to the browser.
+- All SSO requests are performed by Laravel.
+- Users receive only a temporary redirect URL.
+- Access is limited to authenticated users.
 
 ---
 
 # Updating
 
-Update the package using Composer:
+Update the package:
 
 ```bash
 composer update vertexinvo/support-widget
+```
+
+Clear Laravel cache after updating:
+
+```bash
+php artisan optimize:clear
 ```
 
 ---
 
 # Troubleshooting
 
-Clear Laravel caches after configuration changes:
+If the widget does not appear:
 
-```bash
-php artisan optimize:clear
-```
-
-If the widget does not appear, verify:
-
-1. The user is logged in.
-2. The widget include exists in your Blade layout.
-3. Assets have been published.
-4. The API key exists in your `.env` file.
-5. Laravel cache has been cleared.
+1. Confirm the user is authenticated.
+2. Confirm the Blade include exists.
+3. Publish the package assets.
+4. Check your `.env` API key.
+5. Clear Laravel cache.
 
 ---
 
 # Support
 
-If you experience any issues or want to request a feature, please open an issue on GitHub:
+For issues, feature requests, or questions:
 
-Repository:
+GitHub Repository:
 
-[https://github.com/salahshakeel/vertex-support-widget](https://github.com/salahshakeel/vertex-support-widget)
+https://github.com/salahshakeel/vertex-support-widget
 
 ---
 
 # License
 
-This package is open-source software licensed under the MIT License.
-
-```
-```
+The VertexInvo Support Widget package is open-source software licensed under the MIT License.
