@@ -40,7 +40,7 @@ and generates a secure support session.
 Install using Composer:
 
 ```bash
-composer require vertex/support-widget
+composer require vertexinvo/support-widget
 ```
 
 ---
