@@ -1,0 +1,32 @@
+{
+    "name": "vertex/support-widget",
+    "description": "Vertex Support Widget",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Vertex\\SupportWidget\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "salahshakeel",
+            "email": "salahshakeel0@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "illuminate/support": "^12.64",
+        "illuminate/view": "^12.64",
+        "illuminate/routing": "^12.64",
+        "illuminate/http": "^12.64",
+        "illuminate/filesystem": "^12.64"
+    },
+     "extra": {
+        "laravel": {
+            "providers": [
+                "Vertex\\SupportWidget\\VertexSupportServiceProvider"
+            ]
+        }
+    }
+}
