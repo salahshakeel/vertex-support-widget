@@ -1,43 +1,29 @@
-# Vertex Support Widget for Laravel
+# VertexInvo Support Widget
 
-A Laravel package that adds a floating support button to your application.  
-Authenticated users can open the Vertex Support portal through secure SSO authentication.
+A Laravel package that adds a floating support widget to your application and securely authenticates logged-in users into the VertexInvo Support Portal using Single Sign-On (SSO).
 
-The package automatically communicates with:
+## Features
 
-```
-POST https://support.vertexinvo.com/api/v1/sso
-```
-
-and generates a secure support session.
-
----
-
-# Features
-
-✅ Floating support button  
-✅ Laravel package auto-discovery  
-✅ Works with Laravel authentication  
-✅ Hidden for guest users  
-✅ Secure server-side SSO request  
-✅ Custom button colors  
-✅ Custom icon colors  
-✅ Configurable API endpoint  
-✅ Easy installation with Composer  
+* 🚀 Easy installation via Composer
+* 🔐 Secure server-side SSO authentication
+* 👤 Widget is only visible to authenticated users
+* 🎨 Configurable button and icon colors
+* 📍 Configurable widget position
+* ⚙️ Laravel package auto-discovery
+* 🛡️ API key is never exposed to the browser
 
 ---
 
-# Requirements
+## Requirements
 
-- PHP >= 8.1
-- Laravel 10+
-- Laravel Authentication enabled
+* PHP 8.1+
+* Laravel 10.x, 11.x or 12.x
 
 ---
 
-# Installation
+## Installation
 
-Install using Composer:
+Install the package using Composer:
 
 ```bash
 composer require vertexinvo/support-widget
@@ -45,9 +31,9 @@ composer require vertexinvo/support-widget
 
 ---
 
-# Configuration
+## Publish Configuration
 
-Publish the configuration file:
+Publish the package configuration:
 
 ```bash
 php artisan vendor:publish --tag=vertex-support-config
@@ -61,222 +47,96 @@ config/vertex-support.php
 
 ---
 
-# Environment Setup
+## Publish Assets
 
-Add your Vertex Support API key:
-
-```env
-VERTEX_SUPPORT_API_KEY=your_product_api_key
-```
-
----
-
-# Publish Assets
-
-Publish CSS and JavaScript files:
+Publish the package assets:
 
 ```bash
 php artisan vendor:publish --tag=vertex-support-assets
 ```
 
-Files will be copied to:
+---
 
-```
-public/vendor/vertex-support/
+## Environment Configuration
+
+Add your API key to your `.env` file:
+
+```env
+VERTEX_SUPPORT_API_KEY=your_api_key
 ```
 
 ---
 
-# Add Widget
+## Configuration
 
-Add the widget to your main Blade layout.
-
-Example:
-
-`resources/views/layouts/app.blade.php`
-
-```blade
-<html>
-
-<head>
-
-<meta name="csrf-token"
-content="{{ csrf_token() }}">
-
-</head>
-
-
-<body>
-
-@yield('content')
-
-
-@include('vertex-support::widget')
-
-
-</body>
-
-</html>
-```
-
----
-
-# Authentication Behavior
-
-The widget only appears when the user is authenticated.
-
-Example:
-
-Logged in user:
-
-```
-User
- |
- | 
- Laravel Application
- |
- |
- Support Widget
- |
- |
- Vertex Support Portal
-```
-
-Guest user:
-
-```
-No widget displayed
-```
-
----
-
-# Configuration Options
-
-File:
-
-```
-config/vertex-support.php
-```
-
-Example:
+Example configuration:
 
 ```php
 return [
 
-    'api_key' =>
-        env('VERTEX_SUPPORT_API_KEY'),
+    'enabled' => true,
 
+    'api_key' => env('VERTEX_SUPPORT_API_KEY'),
 
-    'endpoint' =>
-        'https://support.vertexinvo.com/api/v1/sso',
+    'endpoint' => 'https://support.vertexinvo.com/api/v1/sso',
 
+    'position' => 'bottom-right',
 
-    'position' =>
-        'bottom-right',
+    'button_color' => '#000000',
 
-
-    'button_color' =>
-        '#000000',
-
-
-    'icon_color' =>
-        '#ffffff',
-
-
-    'enabled' =>
-        true,
+    'icon_color' => '#ffffff',
 
 ];
 ```
 
 ---
 
-# Button Position
+## Widget Visibility
 
-Available positions:
+The support widget is displayed **only** for authenticated users.
 
-```
-bottom-right
-bottom-left
-top-right
-top-left
-```
+| User          | Widget    |
+| ------------- | --------- |
+| Guest         | ❌ Hidden  |
+| Authenticated | ✅ Visible |
 
 ---
 
-# SSO Flow
+## SSO Flow
 
-When a user clicks the support button:
+When the user clicks the widget:
+
+1. The package sends a **server-side** request to the VertexInvo SSO endpoint.
+2. The API validates the product API key.
+3. A secure redirect URL is returned.
+4. The user is redirected to the VertexInvo Support Portal.
+
+Request:
 
 ```
-User clicks widget
-        |
-        |
-        v
-Laravel Package Route
-
-POST /vertex-support/sso
-
-        |
-        |
-        v
-
-Vertex Support API
-
-POST /api/v1/sso
-
-        |
-        |
-        v
-
-Response
-
-{
-    "redirect_url": "...",
-    "expires_in":600
-}
-
-        |
-        |
-        v
-
-Open Support Portal
+POST https://support.vertexinvo.com/api/v1/sso
 ```
 
----
-
-# API Request
-
-The package sends:
+Payload:
 
 ```json
 {
-    "api_key": "PRODUCT_API_KEY",
+    "api_key": "YOUR_API_KEY",
     "email": "user@example.com",
     "name": "John Doe"
 }
 ```
 
----
-
-# Success Response
-
-Example:
+Success Response:
 
 ```json
 {
-    "redirect_url": "https://support.vertexinvo.com/session/xxxx",
+    "redirect_url": "https://support.vertexinvo.com/...",
     "expires_in": 600
 }
 ```
 
-The user is redirected to the support portal.
-
----
-
-# Error Response
-
-Example:
+Error Response:
 
 ```json
 {
@@ -284,85 +144,36 @@ Example:
 }
 ```
 
-The widget displays an error message.
+---
+
+## Security
+
+* The API key is never sent to the browser.
+* All SSO requests are made from your Laravel backend.
+* Only the generated redirect URL is returned to the frontend.
 
 ---
 
-# Security
+## Updating
 
-The API key is never exposed to the browser.
-
-The request flow is:
-
-```
-Browser
-   |
-   |
-Laravel Backend
-   |
-   |
-Vertex Support API
-```
-
-The frontend only receives the generated redirect URL.
-
----
-
-# Updating Package
-
-After modifying package code:
+To update the package:
 
 ```bash
-composer dump-autoload
+composer update vertexinvo/support-widget
 ```
 
 ---
 
-# Local Development
+## Support
 
-Add the package repository:
+If you experience any issues or would like to request a feature, please open an issue on the GitHub repository.
 
-```json
-"repositories": [
-    {
-        "type": "path",
-        "url": "../support-widget"
-    }
-]
-```
+Repository:
 
-Install:
-
-```bash
-composer require vertex/support-widget:@dev
-```
+https://github.com/salahshakeel/vertex-support-widget
 
 ---
 
-# Publishing
+## License
 
-## GitHub
-
-Push the package:
-
-```bash
-git init
-
-git add .
-
-git commit -m "Initial release"
-
-git branch -M main
-
-git remote add origin git@github.com:Vertex/support-widget.git
-
-git push -u origin main
-```
-
----
-
-# License
-
-MIT License
-
-Copyright © Vertex
+This package is released under the MIT License.
