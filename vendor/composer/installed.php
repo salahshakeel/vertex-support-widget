@@ -3,7 +3,7 @@
         'name' => 'vertexinvo/support-widget',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'f103fcf73ee7a62d03db035852ebe216d103a551',
+        'reference' => '824d725427547d5e12544e54c43c8246381ad980',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -550,7 +550,7 @@
         'vertexinvo/support-widget' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'f103fcf73ee7a62d03db035852ebe216d103a551',
+            'reference' => '824d725427547d5e12544e54c43c8246381ad980',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
